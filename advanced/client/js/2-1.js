@@ -68,25 +68,20 @@ function fibonacci(n) {
 // 참고: https://bit.ly/memoiz
 // - 동일 계산 반복 시, 이전 계산 값을 메모리에 저장하여 실행 속도를 높이는 방법
 
-const memoFibo = (n)=>{
-    if(n <= 0) return 0;
-    if(n <= 2) return 1;
-    
-    if(memoFibo.cache[n]){
-      return memoFibo.cache[n];
-    }else{
-      return memoFibo.cache[n] = memoFibo(n-1) + memoFibo(n-2);
-    }
-  
+const memoFibo = (n) => {
+  if (n <= 0) return 0;
+  if (n <= 2) return 1;
+
+  if (memoFibo.cache[n]) {
+    return memoFibo.cache[n];
+  } else {
+    return (memoFibo.cache[n] = memoFibo(n - 1) + memoFibo(n - 2));
   }
-  
-  
-  memoFibo.cache = {
-  
-  }
+};
+
+memoFibo.cache = {};
 
 // memoFibo.cache = {}
-
 
 // 회사 부서 팀원들의 월급 총 합을 구해보세요.
 // - 반복문 기반 또는 재귀 호출 알고리즘 중 택 1
@@ -132,3 +127,17 @@ const SocialPartiners = {
     },
   },
 };
+
+function sumSalaries(department) {
+  if (Array.isArray(department)) {
+    return department.reduce((acc, current) =>  acc + current.salary, 0);
+  } else {
+    let sum = 0;
+    for (let value of Object.values(department)) {
+      sum += sumSalaries(value);
+    }
+    return sum;
+  }
+}
+
+sumSalaries(SocialPartiners);
